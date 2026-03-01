@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark GPT | L'IA du Futur</title>
+    <title>Dark GPT | IA Nouvelle Génération</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/mD8z7fyz/Dark-GPT-Logo.png">
-
     <style>
         :root {
-            --bg: #050505;
-            --card-bg: #121212;
-            --accent: #e11d48;
+            --bg: #000000;
+            --accent: #e11d48; 
             --accent-glow: rgba(225, 29, 72, 0.4);
             --text: #ffffff;
-            --glass: rgba(255, 255, 255, 0.03);
+            --glass: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -24,7 +25,7 @@
 
         body {
             background-color: var(--bg);
-            background-image: radial-gradient(circle at top right, #1a050a, transparent);
+            background-image: radial-gradient(circle at 50% -20%, #2a050c, transparent);
             color: var(--text);
             font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
@@ -33,43 +34,55 @@
             overflow: hidden;
         }
 
-        /* HEADER MODERNE VERTICAL */
+        /* HEADER AVEC LOGO ROND */
         header {
-            padding: 25px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             border-bottom: 1px solid var(--glass-border);
-            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
-        .logo-container {
-            position: relative;
+        .logo-wrapper {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            padding: 3px;
+            background: #000;
+            box-shadow: 0 0 25px var(--accent-glow);
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        header img {
-            height: 80px; /* Logo plus grand pour le mobile */
-            width: auto;
-            filter: drop-shadow(0 0 15px var(--accent-glow));
             transition: transform 0.3s ease;
         }
 
-        header h1 {
-            font-size: 1.6rem;
-            letter-spacing: 5px;
-            font-weight: 800;
-            background: linear-gradient(to bottom, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        .logo-wrapper:hover {
+            transform: scale(1.05);
         }
 
-        /* ZONE DE CHAT FLUIDE */
+        header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            letter-spacing: 5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text);
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        /* ZONE DE CHAT */
         #chat-container {
             flex: 1;
             padding: 20px;
@@ -77,22 +90,19 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            scroll-behavior: smooth;
         }
 
-        /* STYLE DES MESSAGES */
         .message {
-            max-width: 90%;
-            padding: 16px 20px;
+            max-width: 85%;
+            padding: 14px 18px;
             font-size: 0.95rem;
-            line-height: 1.6;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+            line-height: 1.5;
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .ai-message {
@@ -100,25 +110,21 @@
             background: var(--glass);
             border: 1px solid var(--glass-border);
             border-radius: 20px 20px 20px 5px;
-            color: #e2e8f0;
-            backdrop-filter: blur(10px);
+            color: #f1f5f9;
         }
-
-        .ai-message b { color: var(--accent); }
 
         .user-message {
             align-self: flex-end;
             background: linear-gradient(135deg, var(--accent), #9f1239);
             color: white;
             border-radius: 20px 20px 5px 20px;
-            box-shadow: 0 10px 25px -5px var(--accent-glow);
+            box-shadow: 0 8px 20px -5px var(--accent-glow);
         }
 
-        /* BARRE DE SAISIE MODERNE */
+        /* INPUT AREA */
         .input-wrapper {
             padding: 20px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(20px);
+            background: #000;
             border-top: 1px solid var(--glass-border);
         }
 
@@ -126,18 +132,17 @@
             max-width: 600px;
             margin: auto;
             display: flex;
-            align-items: center;
-            background: var(--glass);
-            padding: 6px 6px 6px 20px;
-            border-radius: 30px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px;
+            border-radius: 35px;
+            border: 1px solid #333;
+            transition: 0.3s;
         }
 
         .input-box:focus-within {
             border-color: var(--accent);
-            background: rgba(255,255,255,0.05);
-            box-shadow: 0 0 20px var(--accent-glow);
+            background: rgba(255,255,255,0.08);
         }
 
         input {
@@ -145,7 +150,7 @@
             background: transparent;
             border: none;
             color: white;
-            padding: 12px 0;
+            padding-left: 15px;
             font-size: 1rem;
             outline: none;
             font-family: inherit;
@@ -155,69 +160,52 @@
             background: var(--accent);
             color: white;
             border: none;
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             cursor: pointer;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+            transition: 0.2s;
         }
 
-        button:hover {
-            transform: rotate(-10deg) scale(1.1);
-            background: #f43f5e;
-        }
+        button:hover { transform: scale(1.1); background: #f43f5e; }
 
-        /* INDICATEUR DE CHARGEMENT */
         .typing {
             text-align: center;
             font-size: 0.75rem;
             color: var(--accent);
-            font-weight: bold;
-            letter-spacing: 1px;
             margin-bottom: 10px;
             display: none;
-            text-transform: uppercase;
-        }
-
-        /* ADAPTATION MOBILE */
-        @media (max-width: 480px) {
-            header img { height: 65px; }
-            header h1 { font-size: 1.2rem; }
-            .message { max-width: 95%; font-size: 0.9rem; }
-            .input-box { padding: 4px 4px 4px 15px; }
+            font-weight: bold;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/mD8z7fyz/Dark-GPT-Logo.png" alt="Dark GPT Logo">
+        <div class="logo-wrapper">
+            <img src="logo.png" alt="Dark GPT">
         </div>
         <h1>DARK GPT</h1>
     </header>
 
     <div id="chat-container">
         <div class="message ai-message">
-            <i class="fas fa-shield-halved" style="margin-right: 8px; color: var(--accent);"></i>
-            Système initialisé avec succès.<br><br>
-            Je suis <b>Dark GPT</b>. Pose-moi tes questions les plus complexes, je suis prêt à décoder tes besoins.
+            <i class="fas fa-robot" style="margin-right:8px;"></i>
+            Système <b>Dark GPT</b> en ligne. Je suis prêt pour vos requêtes.
         </div>
     </div>
 
     <div class="input-wrapper">
         <div id="typing-indicator" class="typing">
-            <i class="fas fa-circle-notch fa-spin"></i> Analyse en cours...
+            <i class="fas fa-spinner fa-spin"></i> CALCUL EN COURS...
         </div>
         <div class="input-box">
-            <input type="text" id="user-input" placeholder="Écrire à l'IA..." autocomplete="off">
-            <button id="send-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+            <input type="text" id="user-input" placeholder="Message..." autocomplete="off">
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
@@ -244,29 +232,29 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: "Tu es Dark GPT, une IA mystérieuse, futuriste et très intelligente. Réponds en français de manière concise et pro : " + prompt }] }]
+                        contents: [{ parts: [{ text: "Réponds en tant que Dark GPT, une IA mystérieuse, rapide et pro : " + prompt }] }]
                     })
                 });
                 const data = await response.json();
                 typingIndicator.style.display = 'none';
                 return data.candidates[0].content.parts[0].text;
-            } catch (error) {
+            } catch (e) {
                 typingIndicator.style.display = 'none';
-                return "Erreur réseau. Relancez la connexion.";
+                return "Erreur de connexion. Vérifiez votre réseau.";
             }
         }
 
         async function handleSend() {
-            const message = userInput.value.trim();
-            if (!message) return;
-            addMessage(message, 'user');
+            const msg = userInput.value.trim();
+            if (!msg) return;
+            addMessage(msg, 'user');
             userInput.value = '';
-            const aiResponse = await getAIResponse(message);
-            addMessage(aiResponse, 'ai');
+            const res = await getAIResponse(msg);
+            addMessage(res, 'ai');
         }
 
         sendBtn.addEventListener('click', handleSend);
-        userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+        userInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
     </script>
 </body>
 </html>
