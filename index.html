@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark GPT | Intelligence Artificielle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #0d0d0d;
+            --accent: #7c3aed; /* Violet électrique */
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        header {
+            padding: 15px 20px;
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1f1f1f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent-glow);
+            font-weight: 800;
+        }
+
+        /* ZONE DE CHAT */
+        #chat-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg);
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 1rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent);
+            color: var(--text);
+            border-bottom-left-radius: 2px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: var(--accent);
+            color: white;
+            border-bottom-right-radius: 2px;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* INPUT AREA */
+        .input-wrapper {
+            padding: 20px;
+            background: #000;
+            border-top: 1px solid #1f1f1f;
+        }
+
+        .input-box {
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            gap: 10px;
+            background: #151515;
+            padding: 8px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #6d28d9;
+        }
+
+        /* CHARGEMENT */
+        .typing {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>DARK GPT</h1>
+    </header>
+
+    <div id="chat-container">
+        <div class="message ai-message">
+            Système initialisé. Je suis <b>Dark GPT</b>. Comment puis-je vous aider dans l'ombre du réseau ?
+        </div>
+    </div>
+
+    <div class="input-wrapper">
+        <div id="typing-indicator" class="typing">Dark GPT analyse les données...</div>
+        <div class="input-box">
+            <input type="text" id="user-input" placeholder="Envoyer un message à Dark GPT..." autocomplete="off">
+            <button id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURATION
+        const API_KEY = "AIzaSyChHbpucmGogWmxDctrzoYocQwrPc7NZOc";
+        const MODEL_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        function addMessage(text, type) {
+            const div = document.createElement('div');
+            div.className = `message ${type}-message`;
+            div.innerHTML = text.replace(/\n/g, '<br>'); // Gère les retours à la ligne
+            chatContainer.appendChild(div);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function getAIResponse(prompt) {
+            typingIndicator.style.display = 'block';
+            
+            try {
+                const response = await fetch(MODEL_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ 
+                            parts: [{ text: "Tu es Dark GPT, une intelligence artificielle avancée, mystérieuse, un peu sombre mais très serviable. Tu réponds avec précision. Voici la question : " + prompt }] 
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                typingIndicator.style.display = 'none';
+                return data.candidates[0].content.parts[0].text;
+
+            } catch (error) {
+                typingIndicator.style.display = 'none';
+                return "Erreur critique : Connexion au serveur Dark GPT interrompue.";
+            }
+        }
+
+        async function handleSend() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            userInput.value = '';
+
+            const aiResponse = await getAIResponse(message);
+            addMessage(aiResponse, 'ai');
+        }
+
+        // Événements
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+    </script>
+</body>
+</html>
