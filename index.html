@@ -6,12 +6,15 @@
     <title>Dark GPT | Intelligence Artificielle</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="icon" type="image/png" href="Lien_vers_ton_logo_DarkGPT.png">
+
     <style>
         :root {
-            --bg: #050505;
-            --card-bg: #0d0d0d;
-            --accent: #7c3aed; /* Violet électrique */
-            --accent-glow: rgba(124, 58, 237, 0.5);
+            --bg: #000000; /* Fond noir absolu */
+            --card-bg: #101010;
+            --accent: #e11d48; /* Rouge électrique */
+            --accent-glow: rgba(225, 29, 72, 0.5);
             --text: #ffffff;
             --text-secondary: #94a3b8;
         }
@@ -28,22 +31,28 @@
             overflow: hidden;
         }
 
-        /* HEADER */
+        /* HEADER AVEC LOGO */
         header {
             padding: 15px 20px;
-            background: rgba(13, 13, 13, 0.8);
+            background: rgba(16, 16, 16, 0.8);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1f1f1f;
+            border-bottom: 2px solid var(--accent); /* Bordure rouge */
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 15px; /* Espace entre logo et titre */
             z-index: 100;
         }
 
+        header img {
+            height: 40px; /* Taille du logo dans le header */
+            border-radius: 8px;
+        }
+
         header h1 {
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            color: var(--accent);
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            color: var(--text);
             text-shadow: 0 0 15px var(--accent-glow);
             font-weight: 800;
         }
@@ -77,14 +86,14 @@
         .ai-message {
             align-self: flex-start;
             background: var(--card-bg);
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--accent); /* Bordure rouge pour l'IA */
             color: var(--text);
             border-bottom-left-radius: 2px;
         }
 
         .user-message {
             align-self: flex-end;
-            background: var(--accent);
+            background: var(--accent); /* Fond rouge pour l'utilisateur */
             color: white;
             border-bottom-right-radius: 2px;
             box-shadow: 0 4px 15px var(--accent-glow);
@@ -125,7 +134,7 @@
         }
 
         button {
-            background: var(--accent);
+            background: var(--accent); /* Bouton rouge */
             color: white;
             border: none;
             width: 45px;
@@ -140,7 +149,7 @@
 
         button:hover {
             transform: scale(1.05);
-            background: #6d28d9;
+            background: #be123c; /* Rouge plus sombre au survol */
         }
 
         /* CHARGEMENT */
@@ -155,6 +164,7 @@
 <body>
 
     <header>
+        <img src="Lien_vers_ton_logo_DarkGPT.png" alt="Logo Dark GPT">
         <h1>DARK GPT</h1>
     </header>
 
@@ -174,9 +184,11 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
+    
     <script>
         // CONFIGURATION
-        const API_KEY = "AIzaSyChHbpucmGogWmxDctrzoYocQwrPc7NZOc";
+        // Ta clé API est maintenant chargée depuis config.js et n'apparaît plus ici.
         const MODEL_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
         const chatContainer = document.getElementById('chat-container');
