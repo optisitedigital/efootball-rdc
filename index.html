@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OptiFoot | Tournoi eFootball RDC</title>
-    <link rel="icon" type="image/png" href="https://via.placeholder.com/64/ff007f/ffffff?text=EF">
+    <link rel="icon" type="image/png" href="https://www.google.com/s2/favicons?sz=64&domain=konami.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&display=swap" rel="stylesheet">
     
     <style>
@@ -13,28 +13,25 @@
 
         /* SPLASH SCREEN */
         #splash { position: fixed; inset: 0; background: var(--noir); color: var(--blanc); display: flex; justify-content: center; align-items: center; z-index: 9999; animation: fadeOut 2s ease forwards; }
-        .splash-text { font-size: 2rem; font-weight: 900; text-transform: uppercase; border: 4px solid var(--rose); padding: 20px; text-align: center; }
+        .splash-text { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; border: 4px solid var(--rose); padding: 20px; text-align: center; }
         @keyframes fadeOut { 80% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
-        /* NAV */
+        /* NAVIGATION */
         nav { display: flex; justify-content: center; gap: 20px; padding: 20px; background: var(--noir); color: var(--blanc); position: sticky; top: 0; z-index: 100; }
-        nav a { font-weight: 900; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        nav a { font-weight: 900; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; color: white; text-decoration: none; }
+        nav a:hover { color: var(--rose); }
 
-        /* SECTIONS - ADAPTÉ PC/MOBILE */
         .section { display: none; padding: 40px 20px; max-width: 800px; margin: auto; }
         .active { display: block; }
 
-        /* PC : Texte plus grand */
-        @media (min-width: 768px) {
-            h1 { font-size: 5rem !important; }
-            .section { padding: 80px 20px; }
-        }
+        /* HERO AVEC TEXTE INCUSTRE */
+        .hero-container { position: relative; width: 100%; margin-bottom: 30px; }
+        .hero-img { width: 100%; height: 400px; object-fit: cover; border-bottom: 8px solid var(--rose); }
+        .hero-title { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; background: rgba(0,0,0,0.7); padding: 20px; font-size: 2rem; text-transform: uppercase; text-align: center; border: 2px solid var(--rose); width: 80%; }
 
-        h1 { font-size: 2.5rem; text-transform: uppercase; margin-bottom: 20px; }
-        .hero-img { width: 100%; height: auto; border-bottom: 8px solid var(--rose); }
-
-        /* FORM */
-        input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--noir); box-sizing: border-box; font-family: 'Orbitron'; font-weight: bold; }
+        /* FORMULAIRE */
+        input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--noir); box-sizing: border-box; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin: 20px 0; font-weight: bold; }
         button { background: var(--rose); color: #fff; padding: 20px; width: 100%; border: none; font-weight: 900; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
@@ -44,28 +41,42 @@
 
     <nav>
         <a onclick="show('accueil')">Accueil</a>
-        <a onclick="show('actu')">Actu</a>
+        <a onclick="show('actu')">Actualité</a>
         <a onclick="show('inscription')">Inscription</a>
     </nav>
 
     <div id="accueil" class="section active">
-        <h1>TOURNOI<br>EN LIGNE</h1>
-        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200" class="hero-img">
-        <h3>À PROPOS DU TOURNOI</h3>
-        <p style="font-family: sans-serif;">OptiFoot est la structure officielle dédiée aux compétitions eFootball en RDC. Notre objectif est de connecter les meilleurs gamers du pays dans une arène virtuelle compétitive et équitable. Le tournoi est ouvert à tous les joueurs résidant sur le territoire national. Chaque match est arbitré, et le tableau des scores est mis à jour en temps réel.</p>
+        <div class="hero-container">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200" class="hero-img">
+            <div class="hero-title">TOURNOI EFOOTBALL RDC</div>
+        </div>
+        <h2>À PROPOS</h2>
+        <p style="font-family: sans-serif;">OptiFoot est la plateforme officielle dédiée aux compétitions eFootball en République Démocratique du Congo. Notre objectif est de connecter les meilleurs joueurs du pays dans une arène virtuelle compétitive, structurée et équitable. Le tournoi est ouvert à tous les joueurs résidant sur le territoire national. Chaque match est arbitré et les résultats sont mis à jour en temps réel.</p>
     </div>
 
     <div id="actu" class="section">
-        <h2>ACTUALITÉS & RÉSULTATS</h2>
+        <h2>ACTUALITÉ ET RÉSULTATS</h2>
         <div id="news-list"></div>
     </div>
 
     <div id="inscription" class="section">
         <h2>INSCRIPTION JOUEUR</h2>
-        <p style="font-family: sans-serif;">Frais de participation dévoilés exclusivement en privé via WhatsApp après validation.</p>
+        <p style="font-family: sans-serif;">Les frais de participation sont dévoilés exclusivement en privé via WhatsApp après validation de votre candidature.</p>
+        
         <input type="text" id="nom" placeholder="NOM COMPLET">
-        <input type="text" id="id_efoot" placeholder="ID GAMING">
-        <select id="prov"><option>KINSHASA</option><option>GOMA</option><option>LUBUMBASHI</option><option>AUTRE</option></select>
+        <input type="text" id="id_efoot" placeholder="IDENTIFIANT EFOOTBALL">
+        <select id="prov">
+            <option>KINSHASA</option>
+            <option>GOMA</option>
+            <option>LUBUMBASHI</option>
+            <option>AUTRE</option>
+        </select>
+        
+        <div class="checkbox-container">
+            <input type="checkbox" id="possede_efoot" style="width: 20px; height: 20px;">
+            <label for="possede_efoot">AS-TU EFOOTBALL ?</label>
+        </div>
+        
         <button onclick="valider()">VALIDER MA PARTICIPATION</button>
     </div>
 
@@ -78,23 +89,31 @@
         }
 
         async function loadNews() {
-            const res = await fetch(SHEET_URL);
-            const data = await res.text();
-            const rows = data.split('\n').slice(1);
-            const container = document.getElementById('news-list');
-            rows.forEach(row => {
-                const cols = row.split(',');
-                if(cols.length >= 3) {
-                    container.innerHTML += `<div style="margin-bottom:40px"><h3>${cols[0]}</h3><img src="${cols[2]}" style="width:100%; border-bottom:4px solid #ff007f"><p style="font-family:sans-serif">${cols[1]}</p></div>`;
-                }
-            });
+            try {
+                const res = await fetch(SHEET_URL);
+                const data = await res.text();
+                const rows = data.split('\n').slice(1);
+                const container = document.getElementById('news-list');
+                container.innerHTML = "";
+                rows.forEach(row => {
+                    const cols = row.split(',');
+                    if(cols.length >= 3) {
+                        container.innerHTML += `<div style="margin-bottom:40px"><h3>${cols[0]}</h3><img src="${cols[2].trim()}" style="width:100%; border-bottom:4px solid #ff007f"><p style="font-family:sans-serif">${cols[1]}</p></div>`;
+                    }
+                });
+            } catch(e) { console.log("Erreur de chargement"); }
         }
 
         function valider() {
             const n = document.getElementById('nom').value;
             const id = document.getElementById('id_efoot').value;
-            window.open(`https://wa.me/243977092549?text=Inscription OptiFoot%0ANom: ${n}%0AID: ${id}%0AJe souhaite recevoir les infos sur les frais de participation.`);
+            const possede = document.getElementById('possede_efoot').checked ? "OUI" : "NON";
+            
+            if(!n || !id) { alert("Veuillez remplir tous les champs."); return; }
+            
+            window.open(`https://wa.me/243977092549?text=INSCRIPTION OPTIFOOT%0ANom: ${n}%0AIdentifiant: ${id}%0APossède eFootball: ${possede}%0AJe souhaite connaître les frais de participation.`);
         }
+        
         loadNews();
     </script>
 </body>
