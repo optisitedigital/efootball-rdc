@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OptiFoot | Tournoi eFootball RDC</title>
-    <link rel="icon" type="image/png" href="https://www.google.com/s2/favicons?sz=64&domain=konami.com">
+    
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/64/3169/3169575.png" type="image/png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&display=swap" rel="stylesheet">
     
     <style>
         :root { --noir: #0a0a0a; --blanc: #ffffff; --rose: #ff007f; }
         body { font-family: 'Orbitron', sans-serif; background: var(--blanc); color: var(--noir); margin: 0; }
 
-        /* SPLASH SCREEN */
         #splash { position: fixed; inset: 0; background: var(--noir); color: var(--blanc); display: flex; justify-content: center; align-items: center; z-index: 9999; animation: fadeOut 2s ease forwards; }
         .splash-text { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; border: 4px solid var(--rose); padding: 20px; text-align: center; }
         @keyframes fadeOut { 80% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
-        /* NAVIGATION */
         nav { display: flex; justify-content: center; gap: 20px; padding: 20px; background: var(--noir); color: var(--blanc); position: sticky; top: 0; z-index: 100; }
         nav a { font-weight: 900; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; color: white; text-decoration: none; }
         nav a:hover { color: var(--rose); }
@@ -24,14 +24,12 @@
         .section { display: none; padding: 40px 20px; max-width: 800px; margin: auto; }
         .active { display: block; }
 
-        /* HERO AVEC TEXTE INCUSTRE */
         .hero-container { position: relative; width: 100%; margin-bottom: 30px; }
         .hero-img { width: 100%; height: 400px; object-fit: cover; border-bottom: 8px solid var(--rose); }
-        .hero-title { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; background: rgba(0,0,0,0.7); padding: 20px; font-size: 2rem; text-transform: uppercase; text-align: center; border: 2px solid var(--rose); width: 80%; }
+        .hero-title { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; background: rgba(0,0,0,0.7); padding: 20px; font-size: 1.8rem; text-transform: uppercase; text-align: center; border: 2px solid var(--rose); width: 85%; }
 
-        /* FORMULAIRE */
         input, select { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--noir); box-sizing: border-box; }
-        .checkbox-container { display: flex; align-items: center; gap: 10px; margin: 20px 0; font-weight: bold; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin: 20px 0; font-weight: bold; font-family: sans-serif; }
         button { background: var(--rose); color: #fff; padding: 20px; width: 100%; border: none; font-weight: 900; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
@@ -40,9 +38,9 @@
     <div id="splash"><div class="splash-text">EFOOTBALL RDC</div></div>
 
     <nav>
-        <a onclick="show('accueil')">Accueil</a>
-        <a onclick="show('actu')">Actualité</a>
-        <a onclick="show('inscription')">Inscription</a>
+        <a onclick="show('accueil')">ACCUEIL</a>
+        <a onclick="show('actu')">ACTUALITÉ</a>
+        <a onclick="show('inscription')">INSCRIPTION</a>
     </nav>
 
     <div id="accueil" class="section active">
@@ -89,28 +87,24 @@
         }
 
         async function loadNews() {
-            try {
-                const res = await fetch(SHEET_URL);
-                const data = await res.text();
-                const rows = data.split('\n').slice(1);
-                const container = document.getElementById('news-list');
-                container.innerHTML = "";
-                rows.forEach(row => {
-                    const cols = row.split(',');
-                    if(cols.length >= 3) {
-                        container.innerHTML += `<div style="margin-bottom:40px"><h3>${cols[0]}</h3><img src="${cols[2].trim()}" style="width:100%; border-bottom:4px solid #ff007f"><p style="font-family:sans-serif">${cols[1]}</p></div>`;
-                    }
-                });
-            } catch(e) { console.log("Erreur de chargement"); }
+            const res = await fetch(SHEET_URL);
+            const data = await res.text();
+            const rows = data.split('\n').slice(1);
+            const container = document.getElementById('news-list');
+            container.innerHTML = "";
+            rows.forEach(row => {
+                const cols = row.split(',');
+                if(cols.length >= 3) {
+                    container.innerHTML += `<div style="margin-bottom:40px"><h3>${cols[0]}</h3><img src="${cols[2].trim()}" style="width:100%; border-bottom:4px solid #ff007f"><p style="font-family:sans-serif">${cols[1]}</p></div>`;
+                }
+            });
         }
 
         function valider() {
             const n = document.getElementById('nom').value;
             const id = document.getElementById('id_efoot').value;
             const possede = document.getElementById('possede_efoot').checked ? "OUI" : "NON";
-            
             if(!n || !id) { alert("Veuillez remplir tous les champs."); return; }
-            
             window.open(`https://wa.me/243977092549?text=INSCRIPTION OPTIFOOT%0ANom: ${n}%0AIdentifiant: ${id}%0APossède eFootball: ${possede}%0AJe souhaite connaître les frais de participation.`);
         }
         
