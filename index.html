@@ -4,51 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OptiFoot | Global eFootball</title>
+    
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/532/532195.png" type="image/png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
         :root { --noir: #000000; --blanc: #ffffff; --gris: #111111; --vert-wa: #25D366; }
         * { box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--noir); color: var(--blanc); margin: 0; overflow-x: hidden; }
 
-        /* Splash Screen Initial */
+        /* Splash Screen */
         #splash { position: fixed; inset: 0; background: var(--noir); display: flex; justify-content: center; align-items: center; z-index: 10000; animation: fadeOut 1.5s ease forwards; }
-        .splash-logo { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px; border: 2px solid white; padding: 15px; text-transform: uppercase; }
+        .splash-logo { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px; border: 2px solid white; padding: 15px; }
         @keyframes fadeOut { 85% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
-        /* Menu Mobile Adaptatif */
+        /* Nav */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0,0,0,0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
-        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; letter-spacing: 2px; }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; }
         .burger { cursor: pointer; padding: 5px; }
-        .burger div { width: 25px; height: 2px; background: var(--blanc); margin: 6px; transition: 0.3s; }
+        .burger div { width: 25px; height: 2px; background: var(--blanc); margin: 6px; }
         
         .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--noir); padding: 20px; gap: 20px; border-bottom: 2px solid #333; }
         .nav-links.active { display: flex; }
-        .nav-links a { color: var(--blanc); text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .nav-links a { color: var(--blanc); text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; }
 
-        /* Hero Image - CONFIGURÉE POUR hero.jpg */
-        .hero { height: 45vh; background: url('hero.jpg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; border-bottom: 4px solid white; position: relative; }
-        .hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
-        .hero h1 { font-family: 'Orbitron'; font-size: 1.6rem; z-index: 1; background: black; padding: 10px 20px; border: 1px solid white; }
+        /* HERO FIX POUR GITHUB - On utilise le nom hero.jpg */
+        .hero { 
+            height: 45vh; 
+            background: #111 url('hero.jpg') center/cover no-repeat; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            border-bottom: 4px solid white; 
+            position: relative; 
+        }
+        .hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.3); }
+        .hero h1 { font-family: 'Orbitron'; font-size: 1.6rem; z-index: 1; background: black; padding: 10px 20px; border: 1px solid white; margin: 0; }
 
-        /* Conteneur de Section */
         .section { display: none; padding: 40px 20px; max-width: 600px; margin: auto; min-height: 80vh; }
         .section.active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ANIMATION NEWS (Slide Up) */
-        .news-item { margin-bottom: 60px; opacity: 0; transform: translateY(60px); transition: all 0.9s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        /* News Cards */
+        .news-item { margin-bottom: 60px; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
         .news-item.visible { opacity: 1; transform: translateY(0); }
-        .news-img { width: 100%; border-radius: 2px; margin: 15px 0; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .news-item h3 { font-family: 'Orbitron'; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; color: var(--blanc); border-left: 3px solid white; padding-left: 10px; }
-        .news-item p { color: #bbb; line-height: 1.5; font-size: 0.9rem; font-weight: 300; }
+        .news-img { width: 100%; border-radius: 2px; margin: 15px 0; border: 1px solid #333; }
+        .news-item h3 { font-family: 'Orbitron'; font-size: 1.1rem; border-left: 3px solid white; padding-left: 10px; margin-bottom: 10px; }
 
-        /* Formulaire et Boutons */
-        input { width: 100%; padding: 18px; margin: 10px 0; background: #0f0f0f; border: 1px solid #333; color: white; font-family: 'Inter'; border-radius: 0; }
-        
-        .btn-main { background: var(--blanc); color: var(--noir); padding: 20px; width: 100%; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 10px; font-family: 'Orbitron'; letter-spacing: 2px; }
-        
-        .btn-whatsapp { background: var(--vert-wa); color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 18px; width: 100%; font-weight: 900; text-transform: uppercase; margin-top: 25px; font-family: 'Orbitron'; letter-spacing: 1px; font-size: 0.9rem; border: none; cursor: pointer; }
-        .btn-whatsapp:hover { background: #1eb954; }
+        /* Form */
+        input { width: 100%; padding: 18px; margin: 10px 0; background: #0f0f0f; border: 1px solid #333; color: white; border-radius: 0; font-size: 1rem; }
+        .btn-main { background: var(--blanc); color: var(--noir); padding: 20px; width: 100%; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; font-family: 'Orbitron'; letter-spacing: 2px; }
+        .btn-whatsapp { background: var(--vert-wa); color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 18px; width: 100%; font-weight: 900; text-transform: uppercase; margin-top: 25px; font-family: 'Orbitron'; }
 
         @media (min-width: 768px) {
             .burger { display: none; }
@@ -58,7 +65,7 @@
 </head>
 <body>
 
-    <div id="splash"><div class="splash-logo">OPTIFOOT GLOBAL</div></div>
+    <div id="splash"><div class="splash-logo">OPTIFOOT</div></div>
 
     <nav>
         <div class="logo">OPTIFOOT</div>
@@ -75,8 +82,8 @@
     <div id="accueil" class="section active">
         <div class="hero"><h1>EFOOTBALL PRO</h1></div>
         <div style="margin-top: 35px; text-align: center;">
-            <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">DEVIENS UNE LÉGENDE</h2>
-            <p>Affronte les meilleurs joueurs du monde. Ton talent mérite d'être récompensé.</p>
+            <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">L'ÉLITE MONDIALE</h2>
+            <p>Affronte les meilleurs joueurs. Ton talent mérite d'être récompensé.</p>
         </div>
     </div>
 
@@ -86,20 +93,12 @@
     </div>
 
     <div id="inscription" class="section">
-        <h2 style="font-family: 'Orbitron';">INSCRIPTION LIGUE</h2>
+        <h2 style="font-family: 'Orbitron';">INSCRIPTION</h2>
         <input type="text" id="nom" placeholder="NOM COMPLET">
         <input type="text" id="id_efoot" placeholder="ID EFOOTBALL">
         <input type="text" id="pays" placeholder="PAYS">
         <button class="btn-main" onclick="valider()">REJOINDRE</button>
-
-        <div style="margin: 30px 0; border-top: 1px solid #333; position: relative;">
-            <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: black; padding: 0 15px; font-size: 0.7rem; color: #666;">OU</span>
-        </div>
-
-        <a href="https://chat.whatsapp.com/GdM7nwe7Umy86bbNSE5Mdl" target="_blank" class="btn-whatsapp">
-            INTÉGRER LE GROUPE WHATSAPP
-        </a>
-        <p style="font-size: 0.7rem; color: #888; text-align: center; margin-top: 10px;">Les règles sont disponibles exclusivement dans le groupe.</p>
+        <a href="https://chat.whatsapp.com/GdM7nwe7Umy86bbNSE5Mdl" target="_blank" class="btn-whatsapp">WHATSAPP GROUP</a>
     </div>
 
     <script>
@@ -117,7 +116,7 @@
 
         async function loadNews() {
             try {
-                const res = await fetch(SHEET_URL);
+                const res = await fetch(`${SHEET_URL}&t=${new Date().getTime()}`); // Cache-buster
                 const data = await res.text();
                 const rows = data.split('\n').slice(1);
                 const container = document.getElementById('news-list');
@@ -127,27 +126,22 @@
                     if (row.trim() === "") return;
                     const cols = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$)/g);
                     if (!cols) return;
-
                     const titre = cols[0].replace(/"/g, "");
                     const desc = cols[1].replace(/"/g, "");
-                    const img = cols[2] ? cols[2].replace(/"/g, "").replace(/\s/g, "") : "";
+                    const img = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
 
-                    const item = document.createElement('div');
-                    item.className = 'news-item';
-                    item.innerHTML = `
+                    const newsDiv = document.createElement('div');
+                    newsDiv.className = 'news-item';
+                    newsDiv.innerHTML = `
                         <h3>${titre}</h3>
-                        ${img ? `<img src="${img}" class="news-img" alt="Score" onerror="this.style.display='none'">` : ''}
-                        <p>${desc}</p>
-                    `;
-                    container.appendChild(item);
+                        ${img ? `<img src="${img}" class="news-img" onerror="this.style.display='none'">` : ''}
+                        <p>${desc}</p>`;
+                    container.appendChild(newsDiv);
                 });
 
                 const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if(entry.isIntersecting) entry.target.classList.add('visible');
-                    });
+                    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
                 }, { threshold: 0.1 });
-
                 document.querySelectorAll('.news-item').forEach(el => observer.observe(el));
             } catch (err) { console.error(err); }
         }
@@ -156,10 +150,9 @@
             const n = document.getElementById('nom').value;
             const id = document.getElementById('id_efoot').value;
             const p = document.getElementById('pays').value;
-            if(!n || !id || !p) { alert("Tous les champs sont requis !"); return; }
+            if(!n || !id || !p) { alert("Champs requis !"); return; }
             window.open(`https://wa.me/243977092549?text=INSCRIPTION_GLOBAL%0ANom: ${n}%0AID: ${id}%0APays: ${p}`);
         }
-
         loadNews();
     </script>
 </body>
