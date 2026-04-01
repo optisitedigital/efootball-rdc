@@ -4,44 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OptiFoot | Global eFootball</title>
-
-    <!-- SEO -->
+    
     <meta name="description" content="Rejoins l'élite d'eFootball sur OptiFoot. Tournois mondiaux, scores en live et récompenses réelles.">
-
-    <!-- OPEN GRAPH -->
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="OptiFoot">
     <meta property="og:title" content="OptiFoot | Global eFootball Tournament">
-    <meta property="og:description" content="Affronte les meilleurs joueurs, monte dans le classement et gagne des prix.">
-    <meta property="og:image" content="https://tonsite.com/images/optifoot-banner.png">
-    <meta property="og:image:secure_url" content="https://tonsite.com/images/optifoot-banner.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:url" content="https://tonsite.com">
-
-    <!-- TWITTER -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Affronte les meilleurs joueurs, monte dans le classement et gagne des prix. La légende commence ici.">
+    <meta property="og:image" content="https://i.postimg.cc/9X7K73Hm/Gemini-Generated-Image-2agyey2agyey2agy.png">
+    <meta property="og:url" content="https://optifoot.com"> <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="OptiFoot | Global eFootball">
-    <meta name="twitter:description" content="L'arène ultime pour les joueurs eFootball.">
-    <meta name="twitter:image" content="https://tonsite.com/images/optifoot-banner.png">
+    <meta name="twitter:description" content="L'arène ultime pour les joueurs eFootball. Inscris-toi maintenant.">
+    <meta name="twitter:image" content="https://i.postimg.cc/9X7K73Hm/Gemini-Generated-Image-2agyey2agyey2agy.png">
 
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/532/532195.png" type="image/png">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;600&display=swap" rel="stylesheet">
-
     <style>
         :root { 
             --noir: #000000; 
             --blanc: #ffffff; 
             --gris: #111111; 
             --vert-wa: #25D366;
-            --fluo-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            --fluo-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            --accent-glow: 0 0 25px rgba(255, 255, 255, 0.3);
         }
 
         * { box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--noir); color: var(--blanc); margin: 0; overflow-x: hidden; }
 
+        /* Splash Screen */
         #splash { 
             position: fixed; inset: 0; background: var(--noir); 
             display: flex; justify-content: center; align-items: center; 
@@ -50,119 +40,234 @@
         .splash-logo { 
             font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 5px; 
             border: 2px solid white; padding: 15px; box-shadow: var(--fluo-shadow);
+            animation: pulse 1.5s infinite alternate;
         }
+        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.7); } }
         @keyframes fadeOut { 85% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
+        /* Navigation */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 15px 20px; background: rgba(0,0,0,0.95); 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; 
+            backdrop-filter: blur(10px);
         }
         .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; letter-spacing: 2px; }
         
         .burger { cursor: pointer; padding: 5px; z-index: 1001; }
-        .burger div { width: 25px; height: 2px; background: var(--blanc); margin: 6px; }
-
+        .burger div { width: 25px; height: 2px; background: var(--blanc); margin: 6px; transition: 0.3s; }
+        
         .nav-links { 
             display: none; flex-direction: column; position: absolute; 
             top: 100%; left: 0; width: 100%; background: var(--noir); 
             padding: 20px; gap: 20px; border-bottom: 2px solid #fff; 
         }
         .nav-links.active { display: flex; }
-
-        .hero-container {
-            padding: 10px;
-        }
-
-        .hero { 
-            height: 50vh;
-            background: url('https://tonsite.com/images/optifoot-banner.png') center/cover no-repeat; 
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-            border: 2px solid #fff;
-            box-shadow: 0 0 30px rgba(255,255,255,0.5);
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
-        }
-
-        .hero h1 {
-            font-family: 'Orbitron';
-            font-size: 1.6rem;
-            z-index: 1;
-            padding: 12px 25px;
-            border: 1px solid white;
-            box-shadow: var(--fluo-shadow);
-        }
-
-        .section { display: none; padding: 40px 20px; max-width: 600px; margin: auto; min-height: 80vh; }
-        .section.active { display: block; }
-
-        .news-img {
-            width: 100%;
-            border: 1px solid #fff;
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
-        }
-
-        .btn-main {
-            background: var(--blanc);
-            color: var(--noir);
-            padding: 20px;
-            width: 100%;
-            font-weight: 900;
-            cursor: pointer;
-            font-family: 'Orbitron';
+        .nav-links a { 
+            color: var(--blanc); text-decoration: none; font-weight: 700; 
+            text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;
             transition: 0.3s;
         }
+        .nav-links a:hover { text-shadow: var(--fluo-shadow); letter-spacing: 2px; }
 
-        .btn-main:hover {
-            transform: scale(1.05);
-            box-shadow: var(--fluo-shadow);
+        /* HERO SECTION AVEC LIEN DIRECT ET CONTOUR FLUO */
+        .hero-container {
+            padding: 10px;
+            background: var(--noir);
+        }
+        .hero { 
+            height: 45vh; 
+            width: 100%;
+            background: url('https://i.postimg.cc/9X7K73Hm/Gemini-Generated-Image-2agyey2agyey2agy.png') center/cover no-repeat; 
+            display: flex; align-items: center; justify-content: center; text-align: center; 
+            position: relative;
+            border: 2px solid #fff; /* Contour Blanc */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2); /* Effet Fluo */
+            overflow: hidden;
+        }
+        /* Effet de balayage cyber */
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg); animation: scan 4s infinite; z-index: 2;
+        }
+        @keyframes scan { 0% { left: -100%; } 100% { left: 200%; } }
+
+        .hero::after { 
+            content: ''; position: absolute; inset: 0; 
+            background: rgba(0,0,0,0.3); 
+        }
+        .hero h1 { 
+            font-family: 'Orbitron'; font-size: 1.4rem; z-index: 3; 
+            background: rgba(0,0,0,0.8); padding: 10px 20px; 
+            border: 1px solid white; box-shadow: var(--fluo-shadow);
+            text-transform: uppercase;
         }
 
-        .btn-whatsapp {
-            background: var(--vert-wa);
-            color: white;
-            display: flex;
-            justify-content: center;
-            padding: 18px;
-            font-weight: 900;
-            margin-top: 25px;
+        /* Sections */
+        .section { display: none; padding: 40px 20px; max-width: 600px; margin: auto; min-height: 80vh; }
+        .section.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* News / Google Sheet Content */
+        .news-item { 
+            margin-bottom: 60px; opacity: 0; 
+            transform: translateY(60px); transition: all 0.9s ease-out; 
+            border-bottom: 1px solid #222; padding-bottom: 20px;
+        }
+        .news-item.visible { opacity: 1; transform: translateY(0); }
+        .news-img { 
+            width: 100%; border-radius: 2px; margin: 15px 0; 
+            border: 1px solid #fff; box-shadow: 0 0 10px rgba(255,255,255,0.2);
+            transition: 0.5s;
+        }
+        .news-img:hover { transform: scale(1.02); box-shadow: var(--fluo-shadow); }
+        .news-item h3 { 
+            font-family: 'Orbitron'; font-size: 1.1rem; border-left: 4px solid white; 
+            padding-left: 15px; text-transform: uppercase; 
+        }
+        .news-item p { color: #ccc; line-height: 1.6; font-size: 0.95rem; }
+
+        /* Formulaire */
+        input { 
+            width: 100%; padding: 18px; margin: 10px 0; 
+            background: #0a0a0a; border: 1px solid #444; color: white; 
+            font-family: 'Inter'; border-radius: 0; transition: 0.3s;
+        }
+        input:focus { border-color: #fff; outline: none; box-shadow: var(--fluo-shadow); background: #111; }
+        
+        .btn-main { 
+            background: var(--blanc); color: var(--noir); padding: 20px; 
+            width: 100%; border: none; font-weight: 900; cursor: pointer; 
+            text-transform: uppercase; margin-top: 15px; font-family: 'Orbitron'; 
+            letter-spacing: 2px; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .btn-main:hover { background: #fff; box-shadow: var(--fluo-shadow); transform: translateY(-2px); }
+
+        .btn-whatsapp { 
+            background: var(--vert-wa); color: white; text-decoration: none; 
+            display: flex; align-items: center; justify-content: center; 
+            padding: 18px; width: 100%; font-weight: 900; text-transform: uppercase; 
+            margin-top: 25px; font-family: 'Orbitron'; gap: 10px;
+            transition: 0.3s;
+        }
+        .btn-whatsapp:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        @media (min-width: 768px) {
+            .burger { display: none; }
+            .nav-links { display: flex; flex-direction: row; position: static; width: auto; background: transparent; padding: 0; border: none; }
+            .hero { height: 60vh; }
+            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
-
 <body>
 
-<div id="splash"><div class="splash-logo">OPTIFOOT GLOBAL</div></div>
+    <div id="splash"><div class="splash-logo">OPTIFOOT GLOBAL</div></div>
 
-<nav>
-    <div class="logo">OPTIFOOT</div>
-    <div class="burger" onclick="toggleMenu()">
-        <div></div><div></div><div></div>
-    </div>
-    <div class="nav-links" id="menu">
-        <a onclick="show('accueil')">Accueil</a>
-        <a onclick="show('actu')">Actualité & Scores</a>
-        <a onclick="show('inscription')">S'inscrire</a>
-    </div>
-</nav>
+    <nav>
+        <div class="logo">OPTIFOOT</div>
+        <div class="burger" onclick="toggleMenu()">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="nav-links" id="menu">
+            <a onclick="show('accueil')">Accueil</a>
+            <a onclick="show('actu')">Actualité & Scores</a>
+            <a onclick="show('inscription')">S'inscrire</a>
+        </div>
+    </nav>
 
-<div id="accueil" class="section active">
-    <div class="hero-container">
-        <div class="hero">
-            <h1>GLOBAL TOURNAMENT</h1>
+    <div id="accueil" class="section active">
+        <div class="hero-container">
+            <div class="hero">
+                <h1>GLOBAL TOURNAMENT</h1>
+            </div>
+        </div>
+        <div style="margin-top: 35px; text-align: center;">
+            <h2 style="font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 1px;">AFFRONTE LE MONDE ENTIER</h2>
+            <p style="font-weight: 300; color: #aaa;">Rejoins la ligue ultime. Prouve ton talent et repars avec des gains réels. Peu importe ton niveau, ta légende commence ici.</p>
         </div>
     </div>
-</div>
 
-<script>
-function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
-</script>
+    <div id="actu" class="section">
+        <h2 style="font-family: 'Orbitron'; border-bottom: 2px solid #fff; padding-bottom: 10px; margin-bottom: 30px; display: inline-block;">LIGUE LIVE</h2>
+        <div id="news-list">
+        </div>
+    </div>
 
+    <div id="inscription" class="section">
+        <h2 style="font-family: 'Orbitron';">REJOINDRE L'ARÈNE</h2>
+        <input type="text" id="nom" placeholder="NOM COMPLET">
+        <input type="text" id="id_efoot" placeholder="ID JOUEUR EFOOTBALL">
+        <input type="text" id="pays" placeholder="PAYS">
+        <button class="btn-main" onclick="valider()">VALIDER MON ENTRÉE</button>
+
+        <a href="https://chat.whatsapp.com/GdM7nwe7Umy86bbNSE5Mdl" target="_blank" class="btn-whatsapp">
+            GROUPE WHATSAPP OFFICIEL
+        </a>
+    </div>
+
+    <script>
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7KOJZ3ABCxF7HD17Gwhgtc3HisOSr8ve3BBXX7AKMdU8n6D4Z5MtDBLn7XTHBsU3Ro_zrHMjlyki9/pub?output=csv";
+
+        function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
+
+        function show(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('menu').classList.remove('active');
+            window.scrollTo(0,0);
+            if(id === 'actu') loadNews();
+        }
+
+        async function loadNews() {
+            try {
+                const res = await fetch(`${SHEET_URL}&t=${new Date().getTime()}`);
+                const data = await res.text();
+                const rows = data.split('\n').slice(1);
+                const container = document.getElementById('news-list');
+                container.innerHTML = "";
+
+                rows.forEach(row => {
+                    if (row.trim() === "") return;
+                    const cols = row.match(/(".*?"|[^",\r\n]+)(?=\s*,|\s*$)/g);
+                    if (!cols) return;
+
+                    const titre = cols[0].replace(/"/g, "");
+                    const desc = cols[1].replace(/"/g, "");
+                    const img = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
+
+                    const item = document.createElement('div');
+                    item.className = 'news-item';
+                    item.innerHTML = `
+                        <h3>${titre}</h3>
+                        ${img ? `<img src="${img}" class="news-img" alt="Match" onerror="this.style.display='none'">` : ''}
+                        <p>${desc}</p>
+                    `;
+                    container.appendChild(item);
+                });
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting) entry.target.classList.add('visible');
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.news-item').forEach(el => observer.observe(el));
+            } catch (err) { console.error("Erreur Google Sheet:", err); }
+        }
+
+        function valider() {
+            const n = document.getElementById('nom').value;
+            const id = document.getElementById('id_efoot').value;
+            const p = document.getElementById('pays').value;
+            if(!n || !id || !p) { alert("Tous les champs sont obligatoires !"); return; }
+            window.open(`https://wa.me/243977092549?text=INSCRIPTION_LEAGUE%0ANom: ${n}%0AID: ${id}%0APays: ${p}`);
+        }
+
+        // Initialisation
+        loadNews();
+    </script>
 </body>
 </html>
